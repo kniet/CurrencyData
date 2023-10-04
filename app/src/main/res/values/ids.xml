@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="kursyTable" type="id" />
+    <item name="tableRow" type="id" />
+    <item name="skrotWaluty" type="id" />
+    <item name="nazwaWaluty" type="id" />
+    <item name="kursZlotego" type="id" />
+</resources>
