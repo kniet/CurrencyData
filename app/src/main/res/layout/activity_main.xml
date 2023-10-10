@@ -72,36 +72,18 @@
                 android:id="@+id/tableRow"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
-
-                <!--                        <TextView-->
-                <!--                            android:id="@+id/skrotWaluty"-->
-                <!--                            android:layout_width="81dp"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            android:gravity="center" />-->
-
-                <!--                        <TextView-->
-                <!--                            android:id="@+id/nazwaWaluty"-->
-                <!--                            android:layout_width="165dp"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            android:gravity="center" />-->
-
-                <!--                        <TextView-->
-                <!--                            android:id="@+id/kursZlotego"-->
-                <!--                            android:layout_width="147dp"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            android:gravity="center" />-->
             </TableRow>
         </TableLayout>
 
-<!--        <TextView-->
-<!--            android:id="@+id/errorMessage"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="536dp"-->
-<!--            android:gravity="center"-->
-<!--            android:textStyle="bold"-->
-<!--            android:textSize="69dp"-->
-<!--            android:text="404 not found"-->
-<!--            android:visibility="invisible" />-->
+        <TextView
+            android:id="@+id/errorMessage"
+            android:layout_width="match_parent"
+            android:layout_height="536dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="69dp"
+            android:text="404 not found"
+            android:visibility="gone" />
     </LinearLayout>
 </ScrollView>
 

@@ -47,6 +47,7 @@ class MainActivity : ComponentActivity() {
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
+                        toggleOfError()
                         for (currency in it) {
                             Log.i("CHECK_RESPONSE", "onResposnse: ${currency.effectiveDate}")
                         }
@@ -63,6 +64,12 @@ class MainActivity : ComponentActivity() {
         })
     }
 
+    private fun toggleOfError() {
+        val data = findViewById<TextView>(R.id.lastUpdate)
+        data.visibility = View.VISIBLE
+        val errorMessage = findViewById<TextView>(R.id.errorMessage)
+        errorMessage.visibility = View.GONE
+    }
     private fun buildService() :CurrencyService? {
         try {
             val builder = Retrofit.Builder().baseUrl(URL)
@@ -77,10 +84,9 @@ class MainActivity : ComponentActivity() {
 
     private fun handleError() {
         val data = findViewById<TextView>(R.id.lastUpdate)
-        data.isVisible = false
-//        val errorMessage = findViewById<TextView>(R.id.errorMessage)
-//        errorMessage.isVisible = true
-
+        data.visibility = View.GONE
+        val errorMessage = findViewById<TextView>(R.id.errorMessage)
+        errorMessage.visibility = View.VISIBLE
     }
 
     private fun displayData(list: List<CurrenciesItem>) {
@@ -119,7 +125,8 @@ class MainActivity : ComponentActivity() {
             column2.setTypeface(null, Typeface.BOLD)
             row.addView(column2)
 
-            column3.text = list.get(0).rates.get(i).mid.toString()
+            val mid = list.get(0).rates.get(i).mid
+            column3.text = String.format("%.4f", mid)
             column3.layoutParams = TableRow.LayoutParams(
                 TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT,
