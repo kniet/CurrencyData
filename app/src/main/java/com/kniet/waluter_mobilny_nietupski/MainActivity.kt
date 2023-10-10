@@ -4,10 +4,13 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import com.kniet.waluter_mobilny_nietupski.model.CurrenciesItem
 import com.kniet.waluter_mobilny_nietupski.service.CurrencyService
@@ -26,15 +29,18 @@ class MainActivity : ComponentActivity() {
         setContentView(R.layout.activity_main)
 
         getAllCurrencies()
+
+        val button = findViewById<ImageButton>(R.id.refreshButton)
+        button.setOnClickListener {
+            findViewById<TableLayout>(R.id.kursyTable).removeAllViews()
+            getAllCurrencies()
+        }
     }
 
     private fun getAllCurrencies() {
-        val builder = Retrofit.Builder().baseUrl(URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(CurrencyService::class.java)
+        val builder = buildService()
 
-        builder.getCurrencyList().enqueue(object : Callback<List<CurrenciesItem>> {
+        builder?.getCurrencyList()?.enqueue(object : Callback<List<CurrenciesItem>> {
             override fun onResponse(
                 call: Call<List<CurrenciesItem>>,
                 response: Response<List<CurrenciesItem>>
@@ -44,17 +50,44 @@ class MainActivity : ComponentActivity() {
                         for (currency in it) {
                             Log.i("CHECK_RESPONSE", "onResposnse: ${currency.effectiveDate}")
                         }
-                        test(it)
+                        displayData(it)
                     }
+                } else {
+                    handleError()
                 }
             }
+
             override fun onFailure(call: Call<List<CurrenciesItem>>, t: Throwable) {
-                Log.i("CHECK_RESPONSE", "onFailure: ${t.message}")
+                handleError()
             }
         })
     }
 
-    private fun test(list: List<CurrenciesItem>) {
+    private fun buildService() :CurrencyService? {
+        try {
+            val builder = Retrofit.Builder().baseUrl(URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            return builder.create(CurrencyService::class.java)
+        } catch (e: IllegalArgumentException) {
+            handleError()
+            return null
+        }
+    }
+
+    private fun handleError() {
+        val data = findViewById<TextView>(R.id.lastUpdate)
+        data.isVisible = false
+//        val errorMessage = findViewById<TextView>(R.id.errorMessage)
+//        errorMessage.isVisible = true
+
+    }
+
+    private fun displayData(list: List<CurrenciesItem>) {
+        val data = findViewById<TextView>(R.id.lastUpdate)
+
+        data.text = "Aktualizacja: ${list.get(0).effectiveDate}"
+
         for (i in 0 until list.get(0).rates.count()) {
             val table = findViewById<TableLayout>(R.id.kursyTable)
             val row = TableRow(this)

@@ -1,88 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="87dp"
-        android:background="#868687">
-
-        <TextView
-            android:id="@+id/kursyWalut"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_marginEnd="177dp"
-            android:clickable="false"
-            android:text="Kursy walut"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/refreshButton"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/refreshButton"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginEnd="18dp"
-            android:background="@null"
-            android:contentDescription="A tiny Android icon"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:scaleType="fitXY"
-            android:src="@drawable/baseline_refresh_24"
-            android:tint="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/kursyWalut"
-            app:layout_constraintEnd_toStartOf="@+id/kursyWalut"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/kursyWalut"
-            app:tint="@android:color/holo_red_dark" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/lastUpdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="Aktualizacja: rrrr-mm-dd" />
-
-    <TableLayout
-        android:id="@+id/kursyTable"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#D5FFFFFF">
+        android:background="#FFFFFF"
+        android:orientation="vertical">
 
-        <TableRow
-            android:id="@+id/tableRow"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="87dp"
+            android:background="#868687">
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/skrotWaluty"-->
-<!--                            android:layout_width="81dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:gravity="center" />-->
+            <TextView
+                android:id="@+id/kursyWalut"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="177dp"
+                android:clickable="false"
+                android:text="Kursy walut"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/refreshButton"
+                app:layout_constraintTop_toTopOf="parent" />
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/nazwaWaluty"-->
-<!--                            android:layout_width="165dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:gravity="center" />-->
+            <ImageButton
+                android:id="@+id/refreshButton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="18dp"
+                android:background="@null"
+                android:contentDescription="A tiny Android icon"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:scaleType="fitXY"
+                android:src="@drawable/baseline_refresh_24"
+                android:tint="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/kursyWalut"
+                app:layout_constraintEnd_toStartOf="@+id/kursyWalut"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/kursyWalut"
+                app:tint="@android:color/holo_red_dark" />
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/kursZlotego"-->
-<!--                            android:layout_width="147dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:gravity="center" />-->
-        </TableRow>
-    </TableLayout>
-</LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/lastUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text=" rrrr-mm-dd" />
+
+        <TableLayout
+            android:id="@+id/kursyTable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#D5FFFFFF">
+
+            <TableRow
+                android:id="@+id/tableRow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <!--                        <TextView-->
+                <!--                            android:id="@+id/skrotWaluty"-->
+                <!--                            android:layout_width="81dp"-->
+                <!--                            android:layout_height="wrap_content"-->
+                <!--                            android:gravity="center" />-->
+
+                <!--                        <TextView-->
+                <!--                            android:id="@+id/nazwaWaluty"-->
+                <!--                            android:layout_width="165dp"-->
+                <!--                            android:layout_height="wrap_content"-->
+                <!--                            android:gravity="center" />-->
+
+                <!--                        <TextView-->
+                <!--                            android:id="@+id/kursZlotego"-->
+                <!--                            android:layout_width="147dp"-->
+                <!--                            android:layout_height="wrap_content"-->
+                <!--                            android:gravity="center" />-->
+            </TableRow>
+        </TableLayout>
+
+<!--        <TextView-->
+<!--            android:id="@+id/errorMessage"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="536dp"-->
+<!--            android:gravity="center"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="69dp"-->
+<!--            android:text="404 not found"-->
+<!--            android:visibility="invisible" />-->
+    </LinearLayout>
+</ScrollView>
+
+
