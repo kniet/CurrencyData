@@ -2,33 +2,35 @@ package com.kniet.waluter_mobilny_nietupski
 
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.activity.ComponentActivity
-import androidx.core.view.isVisible
 import androidx.core.view.setPadding
+import com.kniet.waluter_mobilny_nietupski.configuration.AppDatabase
+import com.kniet.waluter_mobilny_nietupski.dao.CurrencyDao
+import com.kniet.waluter_mobilny_nietupski.entity.Currency
 import com.kniet.waluter_mobilny_nietupski.model.CurrenciesItem
+import com.kniet.waluter_mobilny_nietupski.model.Rate
 import com.kniet.waluter_mobilny_nietupski.service.CurrencyService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.Collections
 
 class MainActivity : ComponentActivity() {
     private val URL = "https://api.nbp.pl/api/exchangerates/tables/"
-
+    lateinit var dao: CurrencyDao
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         getAllCurrencies()
+        val db = AppDatabase.getDatabase(this)
+        dao = db.currencyDao()
 
         val button = findViewById<ImageButton>(R.id.refreshButton)
         button.setOnClickListener {
@@ -47,9 +49,14 @@ class MainActivity : ComponentActivity() {
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        toggleOfError()
-                        for (currency in it) {
-                            Log.i("CHECK_RESPONSE", "onResposnse: ${currency.effectiveDate}")
+                        toggleOffError()
+                        dao.nukeTable()
+                        it.flatMap { currency ->
+                            currency.rates.map { rates ->
+                                Currency(rates.code, rates.currency, rates.mid, currency.effectiveDate)
+                            }
+                        }.forEach { dataToSave ->
+                            dao.insert(dataToSave)
                         }
                         displayData(it)
                     }
@@ -59,12 +66,20 @@ class MainActivity : ComponentActivity() {
             }
 
             override fun onFailure(call: Call<List<CurrenciesItem>>, t: Throwable) {
-                handleError()
+                val currencyList: List<Currency>? = dao.getAll()
+                val currenciesItemList = mutableListOf<CurrenciesItem>()
+
+                if (currencyList != null) {
+                    val rates = currencyList.map { t -> Rate(t.currencyCode, t.currency, t.mid) }
+                    currenciesItemList.add(CurrenciesItem(currencyList[0].date, rates))
+                } else {
+                    handleError()
+                }
             }
         })
     }
 
-    private fun toggleOfError() {
+    private fun toggleOffError() {
         val data = findViewById<TextView>(R.id.lastUpdate)
         data.visibility = View.VISIBLE
         val errorMessage = findViewById<TextView>(R.id.errorMessage)
